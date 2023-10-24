@@ -1,0 +1,7 @@
+{
+  "transactions": [
+    {
+      "rpc": "https://goerli.infura.io/v3/01d84256042040afb53ee2ef68300312"
+    }
+  ]
+}

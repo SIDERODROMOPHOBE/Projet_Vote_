@@ -22,12 +22,14 @@ struct Poll {
         uint256 option4_value;
     }
 
+    //Each poll has its position in this mapping (easy to access from frontend then)
     mapping(uint256 => Poll) public Polls;
 
+    //Total number of polls
     uint256 public polls_couter=0;
 
 
-
+    //Use this to create and register a new poll
     function Create_Poll(uint256 _vote_deadline,string memory _vote_name, string memory _vote_desc) public {
 
         //Create a new poll from a form
