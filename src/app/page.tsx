@@ -22,7 +22,7 @@ import "Styles/globals.css";
 export default function Page() {
   return (
     <div>
-      <h1>wagmi + Next.js</h1>
+    
       
       <Connect />
       <Connected>
@@ -43,6 +43,7 @@ export default function Page() {
         <BlockNumber />
         <br />
         <hr />
+        
         <h2>Read Contract</h2>
         <ReadContract />
         <br />
