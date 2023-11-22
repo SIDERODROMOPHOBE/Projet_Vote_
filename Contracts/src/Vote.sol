@@ -1,60 +1,136 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
-contract Vote {
+contract Sondage 
+{
 
 
-struct Poll {
-        uint256 vote_id;
-        uint256 vote_deadline;
+    struct SondageInfo 
+    {
 
-        string vote_name;
-        string vote_desc;
+
+        string intitule;
 
         string option1;
         string option2;
-        string option3;
-        string option4;
 
-        uint256 option1_value;
-        uint256 option2_value;
-        uint256 option3_value;
-        uint256 option4_value;
+        mapping(address => bool) aVote;
+        mapping(address => bool) choix;
+
+        uint256 votesOption1;
+        uint256 votesOption2;
+
+        bool isOpen;
     }
 
-    //Each poll has its position in this mapping (easy to access from frontend then)
-    mapping(uint256 => Poll) public Polls;
-
-    //Total number of polls
-    uint256 public polls_couter=0;
 
 
-    //Use this to create and register a new poll
-    function Create_Poll(uint256 _vote_deadline,string memory _vote_name, string memory _vote_desc) public {
+    mapping(uint256 => SondageInfo) sondages;
 
-        //Create a new poll from a form
-        Poll memory newPoll = Poll({
+    uint256 public Sondage_count;
+    address god=0x2bdC20F9377221032bcBFBcf9Ea5bB8B4A212165;
+    address god2=0x2bdC20F9377221032bcBFBcf9Ea5bB8B4A212165;
 
-            vote_id: ++polls_couter,
-            vote_deadline: _vote_deadline,
-            vote_name:_vote_name,
-            vote_desc: _vote_desc,
-
-            option1:"un",
-            option2:"deux",
-            option3:"trois",
-            option4:"quatre",
-
-            option1_value:uint256(0),
-            option2_value:uint256(0),
-            option3_value:uint256(0),
-            option4_value:uint256(0)
-
-        });
-
-        //register this new poll with all polls
-        Polls[polls_couter] = newPoll;
+    //seul moi peut terminer un vote
+    modifier onlyGod()
+    {
+        require(msg.sender==god||msg.sender==god2);
+        _;
     }
 
+    function creerSondage(string memory _intitule, string memory _option1, string memory _option2) public 
+    {
     
+    
+        Sondage_count++;
+
+        SondageInfo storage nouveauSondage = sondages[Sondage_count];
+
+        nouveauSondage.intitule = _intitule;
+
+        nouveauSondage.option1 = _option1;
+        nouveauSondage.option2 = _option2;
+
+        nouveauSondage.votesOption1 = 0;
+        nouveauSondage.votesOption2 = 0;
+
+        nouveauSondage.isOpen = true;
+    }
+
+
+    function voter(uint256 _sondageId, uint256 _choix) public 
+    {
+        require(_sondageId > 0 && _sondageId <= Sondage_count, "Le sondage n'existe pas");
+        require(sondages[_sondageId].isOpen, "Le sondage est termine");
+        require(!sondages[_sondageId].aVote[msg.sender], "Vous avez deja vote dans ce sondage");
+
+        require(_choix == 1 || _choix == 2, "Vote invalide");
+
+        
+        if (_choix == 1) 
+        {
+            sondages[_sondageId].votesOption1++;
+            sondages[_sondageId].choix[msg.sender] = true;            
+        } 
+        if (_choix == 1) 
+        {
+            sondages[_sondageId].votesOption2++;
+            sondages[_sondageId].choix[msg.sender] = false;            
+        }
+
+        sondages[_sondageId].aVote[msg.sender] = true;
+    }
+
+
+    function sondageResults(uint256 _sondageId) public view returns (uint256 votesOption1, uint256 votesOption2) 
+    {
+        require(_sondageId > 0 && _sondageId <= Sondage_count, "Sondage inexistant");
+        return (sondages[_sondageId].votesOption1, sondages[_sondageId].votesOption2);
+    }
+
+
+    function sondageInfo(uint256 _sondageId) public view returns (string memory, string memory, string memory)
+    {
+        require(_sondageId > 0 && _sondageId <= Sondage_count, "Sondage inexistant");
+        return( sondages[_sondageId].intitule, sondages[_sondageId].option1, sondages[_sondageId].option2 );
+    }
+
+
+    function isFinished(uint256 _sondageId) public view returns (bool) 
+    {
+        require(_sondageId > 0 && _sondageId <= Sondage_count, "Sondage inexistant");
+        return !sondages[_sondageId].isOpen;
+    }
+
+
+
+
+
+
+    //je peux déterminer un second administrateur du site
+    function changeGod2(address _newGod) public onlyGod
+    {
+        god2=_newGod;
+    }
+
+
+    //terminer un sondage
+    function terminerSondage(uint256 _sondageId) public onlyGod 
+    {
+
+        require(_sondageId > 0 && _sondageId <= Sondage_count, "Sondage inexistant");
+        sondages[_sondageId].isOpen = false;
+
+    }
+
+    //rouvir un sondage
+    function rouvrirSondage(uint256 _sondageId) public onlyGod 
+    {
+
+        require(_sondageId > 0 && _sondageId <= Sondage_count, "Sondage inexistant");
+        sondages[_sondageId].isOpen = true;
+
+    }
+
+
 }

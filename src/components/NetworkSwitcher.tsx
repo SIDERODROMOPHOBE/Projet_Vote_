@@ -5,7 +5,7 @@ import { useNetwork, useSwitchNetwork,configureChains,sepolia  } from 'wagmi'
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 
 
-
+//tester p^lus tard de remettre sepolia, pour l'instant on fait goerli
 const { publicClient } = configureChains(
   [sepolia],
   [
@@ -30,16 +30,8 @@ export function NetworkSwitcher() {
   return (
     <div>
 
-    <h1>awaa ::</h1>
-
     
-      {chain && <div>Connectedd to {chain.name}</div>}
-      {chains && (
-        <div>Available chains: {chains.map((chain) => chain.name)} </div>
-      )}
 
-
-<br></br>
       <div>
         Connected to {chain?.name ?? chain?.id}
         {chain?.unsupported && ' (unsupported)'}
