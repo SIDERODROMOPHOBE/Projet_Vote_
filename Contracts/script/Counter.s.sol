@@ -8,7 +8,7 @@ import {Sondage} from "../src/Vote.sol";
 contract DeploymentScript is Script {
     function run() external {
 
-        uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY_ANVIL");
+        uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
         vm.startBroadcast(deployerPrivateKey);
 
         new Sondage();

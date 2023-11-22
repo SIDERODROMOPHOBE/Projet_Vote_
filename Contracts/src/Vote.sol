@@ -4,7 +4,8 @@ pragma solidity ^0.8.13;
 contract Sondage 
 {
 
-
+//current contract address Goerli : 0x13095563E31e6B40982e9B11B18bb566bca41E94
+//                         Sepolia: 0x9e1Db84654Be32c60A407F19094178Fe4943D517
     struct SondageInfo 
     {
 
