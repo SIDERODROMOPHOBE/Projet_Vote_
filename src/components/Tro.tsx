@@ -12,11 +12,10 @@ export default function Tro()
 {
     var u;
     const [a,seta] = useState(true);
-    const [openContract,setOpenContract] = useState(1);
+    const [openContract,setOpenContract] = useState(2);
 
 
-
-    const sondageResults = useContractRead(
+    const Sondage_count = useContractRead(
         {
             address: '0x13095563E31e6B40982e9B11B18bb566bca41E94',
             abi: [
@@ -186,12 +185,14 @@ export default function Tro()
                     "type": "function"
                 }
             ],
-            functionName:'sondageResults',
-            args : [openContract],
+            functionName:'Sondage_count',
+            
             
         })
+        var Sondages_count = Number(Sondage_count.data);
+        
 
-        const sondageInfo = useContractRead(
+        const sondageResults = useContractRead(
             {
                 address: '0x13095563E31e6B40982e9B11B18bb566bca41E94',
                 abi: [
@@ -361,209 +362,406 @@ export default function Tro()
                         "type": "function"
                     }
                 ],
-                functionName:'sondageInfo',
+                functionName:'sondageResults',
                 args : [openContract],
                 
             })
+        
 
-        const isFinished = useContractRead(
+            function queryPolls()
             {
-                address: '0x13095563E31e6B40982e9B11B18bb566bca41E94',
-                abi: [
-                    {
-                        "inputs": [],
-                        "name": "Sondage_count",
-                        "outputs": [
-                            {
-                                "internalType": "uint256",
-                                "name": "",
-                                "type": "uint256"
-                            }
-                        ],
-                        "stateMutability": "view",
-                        "type": "function"
-                    },
-                    {
-                        "inputs": [
-                            {
-                                "internalType": "address",
-                                "name": "_newGod",
-                                "type": "address"
-                            }
-                        ],
-                        "name": "changeGod2",
-                        "outputs": [],
-                        "stateMutability": "nonpayable",
-                        "type": "function"
-                    },
-                    {
-                        "inputs": [
-                            {
-                                "internalType": "string",
-                                "name": "_intitule",
-                                "type": "string"
-                            },
-                            {
-                                "internalType": "string",
-                                "name": "_option1",
-                                "type": "string"
-                            },
-                            {
-                                "internalType": "string",
-                                "name": "_option2",
-                                "type": "string"
-                            }
-                        ],
-                        "name": "creerSondage",
-                        "outputs": [],
-                        "stateMutability": "nonpayable",
-                        "type": "function"
-                    },
-                    {
-                        "inputs": [
-                            {
-                                "internalType": "uint256",
-                                "name": "_sondageId",
-                                "type": "uint256"
-                            }
-                        ],
-                        "name": "isFinished",
-                        "outputs": [
-                            {
-                                "internalType": "bool",
-                                "name": "",
-                                "type": "bool"
-                            }
-                        ],
-                        "stateMutability": "view",
-                        "type": "function"
-                    },
-                    {
-                        "inputs": [
-                            {
-                                "internalType": "uint256",
-                                "name": "_sondageId",
-                                "type": "uint256"
-                            }
-                        ],
-                        "name": "rouvrirSondage",
-                        "outputs": [],
-                        "stateMutability": "nonpayable",
-                        "type": "function"
-                    },
-                    {
-                        "inputs": [
-                            {
-                                "internalType": "uint256",
-                                "name": "_sondageId",
-                                "type": "uint256"
-                            }
-                        ],
-                        "name": "sondageInfo",
-                        "outputs": [
-                            {
-                                "internalType": "string",
-                                "name": "",
-                                "type": "string"
-                            },
-                            {
-                                "internalType": "string",
-                                "name": "",
-                                "type": "string"
-                            },
-                            {
-                                "internalType": "string",
-                                "name": "",
-                                "type": "string"
-                            }
-                        ],
-                        "stateMutability": "view",
-                        "type": "function"
-                    },
-                    {
-                        "inputs": [
-                            {
-                                "internalType": "uint256",
-                                "name": "_sondageId",
-                                "type": "uint256"
-                            }
-                        ],
-                        "name": "sondageResults",
-                        "outputs": [
-                            {
-                                "internalType": "uint256",
-                                "name": "votesOption1",
-                                "type": "uint256"
-                            },
-                            {
-                                "internalType": "uint256",
-                                "name": "votesOption2",
-                                "type": "uint256"
-                            }
-                        ],
-                        "stateMutability": "view",
-                        "type": "function"
-                    },
-                    {
-                        "inputs": [
-                            {
-                                "internalType": "uint256",
-                                "name": "_sondageId",
-                                "type": "uint256"
-                            }
-                        ],
-                        "name": "terminerSondage",
-                        "outputs": [],
-                        "stateMutability": "nonpayable",
-                        "type": "function"
-                    },
-                    {
-                        "inputs": [
-                            {
-                                "internalType": "uint256",
-                                "name": "_sondageId",
-                                "type": "uint256"
-                            },
-                            {
-                                "internalType": "uint256",
-                                "name": "_choix",
-                                "type": "uint256"
-                            }
-                        ],
-                        "name": "voter",
-                        "outputs": [],
-                        "stateMutability": "nonpayable",
-                        "type": "function"
+
+                for (var idd=1;idd<=Sondages_count ;idd++)
+                {
+                    const sondageInfo = useContractRead(
+                        {
+                            address: '0x13095563E31e6B40982e9B11B18bb566bca41E94',
+                            abi: [
+                                {
+                                    "inputs": [],
+                                    "name": "Sondage_count",
+                                    "outputs": [
+                                        {
+                                            "internalType": "uint256",
+                                            "name": "",
+                                            "type": "uint256"
+                                        }
+                                    ],
+                                    "stateMutability": "view",
+                                    "type": "function"
+                                },
+                                {
+                                    "inputs": [
+                                        {
+                                            "internalType": "address",
+                                            "name": "_newGod",
+                                            "type": "address"
+                                        }
+                                    ],
+                                    "name": "changeGod2",
+                                    "outputs": [],
+                                    "stateMutability": "nonpayable",
+                                    "type": "function"
+                                },
+                                {
+                                    "inputs": [
+                                        {
+                                            "internalType": "string",
+                                            "name": "_intitule",
+                                            "type": "string"
+                                        },
+                                        {
+                                            "internalType": "string",
+                                            "name": "_option1",
+                                            "type": "string"
+                                        },
+                                        {
+                                            "internalType": "string",
+                                            "name": "_option2",
+                                            "type": "string"
+                                        }
+                                    ],
+                                    "name": "creerSondage",
+                                    "outputs": [],
+                                    "stateMutability": "nonpayable",
+                                    "type": "function"
+                                },
+                                {
+                                    "inputs": [
+                                        {
+                                            "internalType": "uint256",
+                                            "name": "_sondageId",
+                                            "type": "uint256"
+                                        }
+                                    ],
+                                    "name": "isFinished",
+                                    "outputs": [
+                                        {
+                                            "internalType": "bool",
+                                            "name": "",
+                                            "type": "bool"
+                                        }
+                                    ],
+                                    "stateMutability": "view",
+                                    "type": "function"
+                                },
+                                {
+                                    "inputs": [
+                                        {
+                                            "internalType": "uint256",
+                                            "name": "_sondageId",
+                                            "type": "uint256"
+                                        }
+                                    ],
+                                    "name": "rouvrirSondage",
+                                    "outputs": [],
+                                    "stateMutability": "nonpayable",
+                                    "type": "function"
+                                },
+                                {
+                                    "inputs": [
+                                        {
+                                            "internalType": "uint256",
+                                            "name": "_sondageId",
+                                            "type": "uint256"
+                                        }
+                                    ],
+                                    "name": "sondageInfo",
+                                    "outputs": [
+                                        {
+                                            "internalType": "string",
+                                            "name": "",
+                                            "type": "string"
+                                        },
+                                        {
+                                            "internalType": "string",
+                                            "name": "",
+                                            "type": "string"
+                                        },
+                                        {
+                                            "internalType": "string",
+                                            "name": "",
+                                            "type": "string"
+                                        }
+                                    ],
+                                    "stateMutability": "view",
+                                    "type": "function"
+                                },
+                                {
+                                    "inputs": [
+                                        {
+                                            "internalType": "uint256",
+                                            "name": "_sondageId",
+                                            "type": "uint256"
+                                        }
+                                    ],
+                                    "name": "sondageResults",
+                                    "outputs": [
+                                        {
+                                            "internalType": "uint256",
+                                            "name": "votesOption1",
+                                            "type": "uint256"
+                                        },
+                                        {
+                                            "internalType": "uint256",
+                                            "name": "votesOption2",
+                                            "type": "uint256"
+                                        }
+                                    ],
+                                    "stateMutability": "view",
+                                    "type": "function"
+                                },
+                                {
+                                    "inputs": [
+                                        {
+                                            "internalType": "uint256",
+                                            "name": "_sondageId",
+                                            "type": "uint256"
+                                        }
+                                    ],
+                                    "name": "terminerSondage",
+                                    "outputs": [],
+                                    "stateMutability": "nonpayable",
+                                    "type": "function"
+                                },
+                                {
+                                    "inputs": [
+                                        {
+                                            "internalType": "uint256",
+                                            "name": "_sondageId",
+                                            "type": "uint256"
+                                        },
+                                        {
+                                            "internalType": "uint256",
+                                            "name": "_choix",
+                                            "type": "uint256"
+                                        }
+                                    ],
+                                    "name": "voter",
+                                    "outputs": [],
+                                    "stateMutability": "nonpayable",
+                                    "type": "function"
+                                }
+                            ],
+                            functionName:'sondageInfo',
+                            args : [openContract],
+                            
+                        })
+            
+                        var sondageName=sondageInfo.data?.toString().split(',')[0];
+                        var sondageOption1=sondageInfo.data?.toString().split(',')[1];
+                        var sondageOption2=sondageInfo.data?.toString().split(',')[2];
                     }
-                ],
-                functionName:'isFinished',
-                args : [openContract],
+            
+                    
+            
+                    const isFinished = useContractRead(
+                        {
+                            address: '0x13095563E31e6B40982e9B11B18bb566bca41E94',
+                            abi: [
+                                {
+                                    "inputs": [],
+                                    "name": "Sondage_count",
+                                    "outputs": [
+                                        {
+                                            "internalType": "uint256",
+                                            "name": "",
+                                            "type": "uint256"
+                                        }
+                                    ],
+                                    "stateMutability": "view",
+                                    "type": "function"
+                                },
+                                {
+                                    "inputs": [
+                                        {
+                                            "internalType": "address",
+                                            "name": "_newGod",
+                                            "type": "address"
+                                        }
+                                    ],
+                                    "name": "changeGod2",
+                                    "outputs": [],
+                                    "stateMutability": "nonpayable",
+                                    "type": "function"
+                                },
+                                {
+                                    "inputs": [
+                                        {
+                                            "internalType": "string",
+                                            "name": "_intitule",
+                                            "type": "string"
+                                        },
+                                        {
+                                            "internalType": "string",
+                                            "name": "_option1",
+                                            "type": "string"
+                                        },
+                                        {
+                                            "internalType": "string",
+                                            "name": "_option2",
+                                            "type": "string"
+                                        }
+                                    ],
+                                    "name": "creerSondage",
+                                    "outputs": [],
+                                    "stateMutability": "nonpayable",
+                                    "type": "function"
+                                },
+                                {
+                                    "inputs": [
+                                        {
+                                            "internalType": "uint256",
+                                            "name": "_sondageId",
+                                            "type": "uint256"
+                                        }
+                                    ],
+                                    "name": "isFinished",
+                                    "outputs": [
+                                        {
+                                            "internalType": "bool",
+                                            "name": "",
+                                            "type": "bool"
+                                        }
+                                    ],
+                                    "stateMutability": "view",
+                                    "type": "function"
+                                },
+                                {
+                                    "inputs": [
+                                        {
+                                            "internalType": "uint256",
+                                            "name": "_sondageId",
+                                            "type": "uint256"
+                                        }
+                                    ],
+                                    "name": "rouvrirSondage",
+                                    "outputs": [],
+                                    "stateMutability": "nonpayable",
+                                    "type": "function"
+                                },
+                                {
+                                    "inputs": [
+                                        {
+                                            "internalType": "uint256",
+                                            "name": "_sondageId",
+                                            "type": "uint256"
+                                        }
+                                    ],
+                                    "name": "sondageInfo",
+                                    "outputs": [
+                                        {
+                                            "internalType": "string",
+                                            "name": "",
+                                            "type": "string"
+                                        },
+                                        {
+                                            "internalType": "string",
+                                            "name": "",
+                                            "type": "string"
+                                        },
+                                        {
+                                            "internalType": "string",
+                                            "name": "",
+                                            "type": "string"
+                                        }
+                                    ],
+                                    "stateMutability": "view",
+                                    "type": "function"
+                                },
+                                {
+                                    "inputs": [
+                                        {
+                                            "internalType": "uint256",
+                                            "name": "_sondageId",
+                                            "type": "uint256"
+                                        }
+                                    ],
+                                    "name": "sondageResults",
+                                    "outputs": [
+                                        {
+                                            "internalType": "uint256",
+                                            "name": "votesOption1",
+                                            "type": "uint256"
+                                        },
+                                        {
+                                            "internalType": "uint256",
+                                            "name": "votesOption2",
+                                            "type": "uint256"
+                                        }
+                                    ],
+                                    "stateMutability": "view",
+                                    "type": "function"
+                                },
+                                {
+                                    "inputs": [
+                                        {
+                                            "internalType": "uint256",
+                                            "name": "_sondageId",
+                                            "type": "uint256"
+                                        }
+                                    ],
+                                    "name": "terminerSondage",
+                                    "outputs": [],
+                                    "stateMutability": "nonpayable",
+                                    "type": "function"
+                                },
+                                {
+                                    "inputs": [
+                                        {
+                                            "internalType": "uint256",
+                                            "name": "_sondageId",
+                                            "type": "uint256"
+                                        },
+                                        {
+                                            "internalType": "uint256",
+                                            "name": "_choix",
+                                            "type": "uint256"
+                                        }
+                                    ],
+                                    "name": "voter",
+                                    "outputs": [],
+                                    "stateMutability": "nonpayable",
+                                    "type": "function"
+                                }
+                            ],
+                            functionName:'isFinished',
+                            args : [openContract],
+                            
+                        })
+                        var isFinishedd=isFinished.data?.toString();
+                }
                 
-            })
+    
+
+    
 
     function write()
     {
         seta(!a);
-        console.log(a);
+        console.log(Sondages_count);
     }
 
-
+    
     
     return (
         <>
 
 
 
-        <button onClick={write}>aaa</button>
-
+        <button onClick={queryPolls}>DEBUG</button>
 
 
         {a && 
 
-      
-        <h1>Opened poll number : {openContract}</h1>
+            <div>
+                <h1>il y a {Sondage_count.data?.toString()} sondages</h1>
+                <br></br>
+                <h1>Opened poll number : {openContract}</h1>
         
-        
+
+            </div>
+
 
         }
 
