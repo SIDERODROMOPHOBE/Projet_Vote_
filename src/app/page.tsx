@@ -16,13 +16,24 @@ import { WatchContractEvents } from '../components/WatchContractEvents'
 import { WatchPendingTransactions } from '../components/WatchPendingTransactions'
 import { WriteContract } from '../components/WriteContract'
 import { WriteContractPrepared } from '../components/WriteContractPrepared'
+import Tro from '../components/Tro'
 
 import "Styles/globals.css";
 
+
+
+
 export default function Page() {
+
+
   return (
+
+ 
     <div>
     
+    <Tro></Tro>
+      
+      <br></br>
       
       <Connect />
       <Connected>
@@ -35,10 +46,17 @@ export default function Page() {
         <Account />
         <br />
         <hr />
-        <h2>Balance</h2>
-        <Balance />
-        <br />
-        <hr />
+
+      
+        
+        
+         
+            <h2>Balance</h2>
+            <Balance />
+            <br />
+            <hr />       
+        
+
         <h2>Block Number</h2>
         <BlockNumber />
         <br />
