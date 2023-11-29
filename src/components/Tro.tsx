@@ -1,16 +1,14 @@
 'use client'
 
 import { useState, ChangeEvent } from "react";
-import "Styles/globals.css";
 import {abi} from "./contracts"
-
 import { useContractRead, useContractWrite,usePrepareContractWrite  } from 'wagmi'
-import { readContract } from "viem/dist/types/actions/public/readContract";
+
+import "Styles/globals.css";
 
 
 export default function Tro() 
 {
-    var u;
     const [a,seta] = useState(true);
     const [openContract,setOpenContract] = useState(1);
 
@@ -130,9 +128,13 @@ export default function Tro()
         {a && 
 
             <div>
-                <h1>il y a {// @ts-ignore 
-                sondageData[0]} sondages</h1>
+                <h1>
+                    il y a {// @ts-ignore 
+                    sondageData[0]} 
+                    sondages
+                </h1>
                 <br></br>
+                
                 <h1>Réferendum numéro  {openContract} :</h1>
                 
 
