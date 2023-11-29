@@ -83,28 +83,12 @@ contract Sondage
     }
 
 
-    function sondageResults(uint256 _sondageId) public view returns (uint256 votesOption1, uint256 votesOption2) 
+
+    function sondageInfo(uint256 _sondageId) public view returns (uint256 Sondaage_count, string memory, string memory, string memory,uint256 votesOption1, uint256 votesOption2,bool)
     {
         require(_sondageId > 0 && _sondageId <= Sondage_count, "Sondage inexistant");
-        return (sondages[_sondageId].votesOption1, sondages[_sondageId].votesOption2);
+        return(Sondage_count, sondages[_sondageId].intitule, sondages[_sondageId].option1, sondages[_sondageId].option2,sondages[_sondageId].votesOption1, sondages[_sondageId].votesOption2,!sondages[_sondageId].isOpen );
     }
-
-
-    function sondageInfo(uint256 _sondageId) public view returns (string memory, string memory, string memory)
-    {
-        require(_sondageId > 0 && _sondageId <= Sondage_count, "Sondage inexistant");
-        return( sondages[_sondageId].intitule, sondages[_sondageId].option1, sondages[_sondageId].option2 );
-    }
-
-
-    function isFinished(uint256 _sondageId) public view returns (bool) 
-    {
-        require(_sondageId > 0 && _sondageId <= Sondage_count, "Sondage inexistant");
-        return !sondages[_sondageId].isOpen;
-    }
-
-
-
 
 
 
