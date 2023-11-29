@@ -4,8 +4,6 @@ import { BlockNumber } from '../components/BlockNumber'
 import { Connect } from '../components/Connect'
 import { Connected } from '../components/Connected'
 import { NetworkSwitcher } from '../components/NetworkSwitcher'
-import { ReadContract } from '../components/ReadContract'
-import { ReadContracts } from '../components/ReadContracts'
 import { ReadContractsInfinite } from '../components/ReadContractsInfinite'
 import { SendTransaction } from '../components/SendTransaction'
 import { SendTransactionPrepared } from '../components/SendTransactionPrepared'
@@ -62,14 +60,7 @@ export default function Page() {
         <br />
         <hr />
         
-        <h2>Read Contract</h2>
-        <ReadContract />
-        <br />
-        <hr />
-        <h2>Read Contracts</h2>
-        <ReadContracts />
-        <br />
-        <hr />
+    
         <h2>Read Contracts Infinite</h2>
         <ReadContractsInfinite />
         <br />
