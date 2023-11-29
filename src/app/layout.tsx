@@ -14,12 +14,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-
-      <h1 className="text-3xl font-bold underline">
-      Hello world!
-      </h1>
-    
-        <Providers>{children}</Providers>
+        <div className='awa'>
+          <Providers>{children}</Providers>
+        </div>
+        
 
       </body>
     </html>

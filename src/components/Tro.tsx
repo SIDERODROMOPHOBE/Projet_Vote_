@@ -192,10 +192,10 @@ export default function Tro()
         var Sondages_count = Number(Sondage_count.data);
         
 
-        const sondageResults = useContractRead(
-            {
-                address: '0x13095563E31e6B40982e9B11B18bb566bca41E94',
-                abi: [
+    const sondageResults = useContractRead(
+        {
+            address: '0x13095563E31e6B40982e9B11B18bb566bca41E94',
+            abi: [
                     {
                         "inputs": [],
                         "name": "Sondage_count",
@@ -361,22 +361,18 @@ export default function Tro()
                         "stateMutability": "nonpayable",
                         "type": "function"
                     }
-                ],
-                functionName:'sondageResults',
-                args : [openContract],
+            ],
+            functionName:'sondageResults',
+            args : [openContract],
                 
-            })
+        })
         
 
-            function queryPolls()
-            {
-
-                for (var idd=1;idd<=Sondages_count ;idd++)
-                {
-                    const sondageInfo = useContractRead(
-                        {
-                            address: '0x13095563E31e6B40982e9B11B18bb566bca41E94',
-                            abi: [
+           
+    const sondageInfo = useContractRead(
+        {
+            address: '0x13095563E31e6B40982e9B11B18bb566bca41E94',
+            abi: [
                                 {
                                     "inputs": [],
                                     "name": "Sondage_count",
@@ -542,23 +538,23 @@ export default function Tro()
                                     "stateMutability": "nonpayable",
                                     "type": "function"
                                 }
-                            ],
-                            functionName:'sondageInfo',
-                            args : [openContract],
+            ],
+            functionName:'sondageInfo',
+            args : [openContract],
                             
-                        })
+        })
             
-                        var sondageName=sondageInfo.data?.toString().split(',')[0];
-                        var sondageOption1=sondageInfo.data?.toString().split(',')[1];
-                        var sondageOption2=sondageInfo.data?.toString().split(',')[2];
-                    }
+        var sondageName=sondageInfo.data?.toString().split(',')[0];
+        var sondageOption1=sondageInfo.data?.toString().split(',')[1];
+        var sondageOption2=sondageInfo.data?.toString().split(',')[2];
+                    
             
                     
             
-                    const isFinished = useContractRead(
-                        {
-                            address: '0x13095563E31e6B40982e9B11B18bb566bca41E94',
-                            abi: [
+    const isFinished = useContractRead(
+        {
+            address: '0x13095563E31e6B40982e9B11B18bb566bca41E94',
+            abi: [
                                 {
                                     "inputs": [],
                                     "name": "Sondage_count",
@@ -724,13 +720,13 @@ export default function Tro()
                                     "stateMutability": "nonpayable",
                                     "type": "function"
                                 }
-                            ],
-                            functionName:'isFinished',
-                            args : [openContract],
+            ],
+            functionName:'isFinished',
+            args : [openContract],
                             
-                        })
-                        var isFinishedd=isFinished.data?.toString();
-                }
+        })
+        var isFinishedd=isFinished.data?.toString();
+                //}
                 
     
 
@@ -749,7 +745,7 @@ export default function Tro()
 
 
 
-        <button onClick={queryPolls}>DEBUG</button>
+        <button onClick={write}>DEBUG</button>
 
 
         {a && 
@@ -758,7 +754,11 @@ export default function Tro()
                 <h1>il y a {Sondage_count.data?.toString()} sondages</h1>
                 <br></br>
                 <h1>Opened poll number : {openContract}</h1>
-        
+                <h2 className="px-5 underline ">{sondageName}</h2>
+
+                    <div className="box-decoration-clone bg-gradient-to-r from-indigo-600 to-pink-500 text-white px-5">
+                        Piou piou
+                    </div>
 
             </div>
 
