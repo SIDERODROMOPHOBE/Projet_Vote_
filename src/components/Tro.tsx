@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, ChangeEvent } from "react";
+import {useEffect, useState, ChangeEvent } from "react";
 import {abi} from "./contracts"
 import { useContractRead, useContractWrite,usePrepareContractWrite  } from 'wagmi'
 
@@ -19,6 +19,7 @@ export default function Tro()
     const [chosenSondage,setChosenSondage]=useState(1);
     const [chosenVote,setChosenVote]=useState(1);
 
+    const [sondageCount,setSondageCount]=useState(0);
 
     const updateSondageName = (e: ChangeEvent<HTMLInputElement>) => {
         setNewSondageName(e.target.value);
@@ -38,7 +39,13 @@ export default function Tro()
             ...abi,
             functionName:'Sondage_count',
         })
-    const sondageCount = Number(sondageCountq.data);
+        
+
+    useEffect(()=>{
+        sondageCountq.refetch
+        setSondageCount(Number(sondageCountq.data))
+        
+    })
            
     const sondageInfo = useContractRead(
         {
@@ -49,7 +56,32 @@ export default function Tro()
             args : [openContract],
                             
         })
-            
+
+    useEffect(()=>{
+        sondageInfo.refetch
+        addSondageUI();
+        for(var y=0;y<=sondageCount;y++)
+        {
+           
+        }
+    },[openContract])
+
+    function addSondageUI()
+    {
+        var datas = sondageInfo.data?.toString().split(',')
+        return(
+            <>
+                <div>
+                    <h1>
+                        Sondage n°{datas[0]} : {datas[1]}
+                    </h1>
+                </div>
+            </>
+        )
+        
+    }
+
+    
     var sondageData=sondageInfo.data?.toString().split(',');
     
     
@@ -79,9 +111,9 @@ export default function Tro()
 
     function wriite()
     {
-        seta(!a);
-        // @ts-ignore
-        console.log(typeof sondageCount)
+        seta(!a)
+
+        
     }
 
     function toggleFormNewSondage() 
@@ -93,10 +125,48 @@ export default function Tro()
     }
     const [formNewSondage,setFormNewSondage] = useState(false);
 
+  
+   
+    
+    function nextSondage()
+    {
+      console.log('set opencotract to : ',openContract+1)
+      
+      if(openContract>=sondageCount)
+      {
+        setOpenContract(1);
+      }
+      else
+      {        
+        setOpenContract(openContract+1);
+      }
+      
+    }
+    function prevSondage()
+    {
+      console.log('set opencotract to : ',openContract+1)
+      
+      if(openContract<=1)
+      {
+        setOpenContract(sondageCount);
+      }
+      else
+      {        
+        setOpenContract(openContract-1);
+      }
+      
+    }
 
 
-    return (
-        <>        
+return (
+        <>  
+
+            <div>
+            <button onClick={nextSondage}>NEXT SONDAGE</button>
+            &nbsp;
+            <button onClick={prevSondage}>PREV SONDAGE</button>
+          </div>
+
         {!formNewSondage &&<button onClick={toggleFormNewSondage}>Créer un nouveau sondage</button>}
         
         {formNewSondage && 
@@ -113,7 +183,9 @@ export default function Tro()
 
 
 
-            <button onClick={() => sondageWrite.write?.()}>Créer le Sondage</button>
+            <button disabled={newSondageName===''||newSondageOP1===""||newSondageOP2===""} onClick={() => sondageWrite.write?.()}>Créer le Sondage</button>
+            {sondageWrite.isLoading && <div>Check Wallet to validate transaction</div>}
+            {sondageWrite.isSuccess && <div>Transaction: {JSON.stringify(sondageWrite.data)}</div>}
 <br/>
             <button onClick={toggleFormNewSondage}>Quitter</button>
         </div>
@@ -123,24 +195,47 @@ export default function Tro()
 
         <br/>
         <button onClick={wriite}>DEBUG</button> <br/>
-        {sondageData}
+        
 
         {a && 
 
             <div>
                 <h1>
                     il y a {// @ts-ignore 
-                    sondageData[0]} 
-                    sondages
+                    sondageData[0]
+                } 
+                    &nbsp; sondages
                 </h1>
                 <br></br>
-                
+
                 <h1>Réferendum numéro  {openContract} :</h1>
                 
 
-                    <div className="underline box-decoration-clone bg-gradient-to-r from-indigo-600 to-pink-500 text-white px-5">
-                        {// @ts-ignore
-                        sondageData[1]}
+                    <div className="text-center  box-decoration-clone bg-gradient-to-r from-indigo-600 to-pink-500 text-white px-5">
+                        
+                         {// @ts-ignore
+                        sondageData[1]
+                    }
+                        <div className="box-decoration-clone bg-gradient-to-r from-indigo-800 to-pink-100 text-white px-5">
+                            <a className="underline"> 
+                            {
+                                // @ts-ignore
+                                sondageData[2]
+                            }
+                            </a>
+                            
+                            <br/>
+                            <p>or</p>
+                            
+                            <a className="underline">
+                            {
+                                // @ts-ignore
+                                sondageData[3]
+                            }
+                            </a>
+                            
+                        </div>
+                        <br/>
                     </div>
 
             </div>
@@ -148,7 +243,7 @@ export default function Tro()
 
         }
 
-<br></br>
         </>
-    )
-}
+        )
+    }
+

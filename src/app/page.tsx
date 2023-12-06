@@ -15,6 +15,7 @@ import { WatchPendingTransactions } from '../components/WatchPendingTransactions
 import { WriteContract } from '../components/WriteContract'
 import { WriteContractPrepared } from '../components/WriteContractPrepared'
 import Tro from '../components/Tro'
+import Tester from '../components/tester'
 
 import "Styles/globals.css";
 
@@ -29,12 +30,14 @@ export default function Page() {
  
     <div>
     
-    <Tro></Tro>
+    
       
       <br></br>
       
       <Connect />
+      
       <Connected>
+        <Tro></Tro>
         <hr />
         <h2>Network</h2>
         <NetworkSwitcher />
