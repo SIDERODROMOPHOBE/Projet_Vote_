@@ -69,7 +69,7 @@ export default function Tro()
     function addSondageUI()
     {
         var datas = sondageInfo.data?.toString().split(',')
-        return(
+        /*return(
             <>
                 <div>
                     <h1>
@@ -77,7 +77,7 @@ export default function Tro()
                     </h1>
                 </div>
             </>
-        )
+        )*/
         
     }
 
