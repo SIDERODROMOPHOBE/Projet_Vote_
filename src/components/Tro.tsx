@@ -35,7 +35,7 @@ export default function Tro()
 
     const sondageCountq = useContractRead(
         {
-            address: '0x721AB533c5f1F94CE0e4728e43E21d69e5d46D56',
+            address: '0x33434bf072f7188cea92CE3Da61D75a56F3624A7',
             ...abi,
             functionName:'Sondage_count',
         })
@@ -45,12 +45,12 @@ export default function Tro()
         sondageCountq.refetch
         setSondageCount(Number(sondageCountq.data))
         
-    })
+    },[sondageCountq,sondageCount])
            
     const sondageInfo = useContractRead
     (
         {
-            address: '0x721AB533c5f1F94CE0e4728e43E21d69e5d46D56',
+            address: '0x33434bf072f7188cea92CE3Da61D75a56F3624A7',
             ...abi,
             functionName:'sondageInfo',
             // @ts-ignore
@@ -65,7 +65,7 @@ export default function Tro()
 
     useEffect(()=>{
         sondageInfo.refetch
-        sondageData=addSondageUI();
+        sondageData=sondageInfo.data?.toString().split(',')
     },[openContract])
 
     function addSondageUI()
@@ -87,7 +87,7 @@ export default function Tro()
     
     const prepareSondageWrite = usePrepareContractWrite(
         {
-            address: '0x721AB533c5f1F94CE0e4728e43E21d69e5d46D56',
+            address: '0x33434bf072f7188cea92CE3Da61D75a56F3624A7',
             ...abi,
             functionName: 'creerSondage',
             args:[newSondageName,newSondageOP1,newSondageOP2],
@@ -97,7 +97,7 @@ export default function Tro()
     
     const prepareVote = usePrepareContractWrite(
         {
-            address: '0x721AB533c5f1F94CE0e4728e43E21d69e5d46D56',
+            address: '0x33434bf072f7188cea92CE3Da61D75a56F3624A7',
             ...abi,
             functionName: 'voter',
             args:[BigInt(openContract),BigInt(chosenVote)],
@@ -108,18 +108,20 @@ export default function Tro()
         function voteFor1()
         {
             setChosenVote(1)
-            Vote.write
+            console.log("VOtED FOR 1")
+            Vote.write?.()
         }
         function voteFor2()
         {
             setChosenVote(2)
-            Vote.write
+            console.log("VOtED FOR 2")
+            Vote.write?.()
         }
     
     
     const prepareVoteWrite = usePrepareContractWrite(
         {
-            address: '0x721AB533c5f1F94CE0e4728e43E21d69e5d46D56',
+            address: '0x33434bf072f7188cea92CE3Da61D75a56F3624A7',
             ...abi,
             functionName: 'voter',
             // @ts-ignore
@@ -144,7 +146,7 @@ export default function Tro()
     
     function nextSondage()
     {
-      console.log('set opencotract to : ',openContract+1)
+      //console.log('set opencotract to : ',openContract+1)
       
       if(openContract>=sondageCount)
       {
@@ -158,7 +160,7 @@ export default function Tro()
     }
     function prevSondage()
     {
-      console.log('set opencotract to : ',openContract+1)
+      //console.log('set opencotract to : ',openContract+1)
       
       if(openContract<=1)
       {
@@ -207,12 +209,7 @@ return (
         }
 
 
-
         <br/>
-
-        
-
-       
 
             <div>
                 <h1>
@@ -234,16 +231,16 @@ return (
                         <div className="flex flex-row border-blue-200 border-2 box-decoration-clone bg-gradient-to-r to-red-800 from-blue-300 text-white px-5">
                             
                             
-                            <div className="basis-1/2 text-amber-100 underline"> 
+                            <button onClick={voteFor1} className="basis-1/2 text-amber-100 underline"> 
                             {
                                 // @ts-ignore
                                 sondageData[2]
                             }
-                            </div>
+                            </button>
                             
                             <p>or</p>
                             
-                            <div className="basis-1/2 text-amber-100 underline">
+                            <div onClick={voteFor2} className="basis-1/2 text-amber-100 underline">
                             {
                                 // @ts-ignore
                                 sondageData[3]

@@ -690,8 +690,8 @@
       }
     },
     "src/Vote.sol": {
-      "lastModificationDate": 1701219827341,
-      "contentHash": "86eb1e4616dc8d6fb02d06585f699c12",
+      "lastModificationDate": 1702139483437,
+      "contentHash": "8e3cf4f8262b878c55e7a35f3e7291b8",
       "sourceName": "src/Vote.sol",
       "solcConfig": {
         "settings": {

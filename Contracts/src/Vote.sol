@@ -73,7 +73,7 @@ contract Sondage
             sondages[_sondageId].votesOption1++;
             sondages[_sondageId].choix[msg.sender] = true;            
         } 
-        if (_choix == 1) 
+        if (_choix == 2) 
         {
             sondages[_sondageId].votesOption2++;
             sondages[_sondageId].choix[msg.sender] = false;            
