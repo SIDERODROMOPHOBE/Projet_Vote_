@@ -1,6 +1,6 @@
 'use client'
 
-import {useEffect, useState, ChangeEvent } from "react";
+import {useEffect, useState, ChangeEvent, SetStateAction } from "react";
 import {abi} from "./contracts"
 import { useContractRead, useContractWrite,usePrepareContractWrite  } from 'wagmi'
 
@@ -9,7 +9,7 @@ import "Styles/globals.css";
 
 export default function Tro() 
 {
-    const [a,seta] = useState(true);
+
     const [openContract,setOpenContract] = useState(1);
 
     const [newSondageName,setNewSondageName] = useState("");
@@ -47,7 +47,8 @@ export default function Tro()
         
     })
            
-    const sondageInfo = useContractRead(
+    const sondageInfo = useContractRead
+    (
         {
             address: '0x721AB533c5f1F94CE0e4728e43E21d69e5d46D56',
             ...abi,
@@ -55,20 +56,22 @@ export default function Tro()
             // @ts-ignore
             args : [openContract],
                             
-        })
+        }
+    )
+    //sondageInfo.refetch
+    var sondageData=sondageInfo.data?.toString().split(',');
+    
+
 
     useEffect(()=>{
         sondageInfo.refetch
-        addSondageUI();
-        for(var y=0;y<=sondageCount;y++)
-        {
-           
-        }
+        sondageData=addSondageUI();
     },[openContract])
 
     function addSondageUI()
     {
-        var datas = sondageInfo.data?.toString().split(',')
+        return sondageInfo.data?.toString().split(',')
+
         /*return(
             <>
                 <div>
@@ -82,10 +85,6 @@ export default function Tro()
     }
 
     
-    var sondageData=sondageInfo.data?.toString().split(',');
-    
-    
-        
     const prepareSondageWrite = usePrepareContractWrite(
         {
             address: '0x721AB533c5f1F94CE0e4728e43E21d69e5d46D56',
@@ -96,7 +95,27 @@ export default function Tro()
     
     const sondageWrite = useContractWrite(prepareSondageWrite.config);
     
+    const prepareVote = usePrepareContractWrite(
+        {
+            address: '0x721AB533c5f1F94CE0e4728e43E21d69e5d46D56',
+            ...abi,
+            functionName: 'voter',
+            args:[BigInt(openContract),BigInt(chosenVote)],
+        })
+    
+    const Vote = useContractWrite(prepareVote.config);
 
+        function voteFor1()
+        {
+            setChosenVote(1)
+            Vote.write
+        }
+        function voteFor2()
+        {
+            setChosenVote(2)
+            Vote.write
+        }
+    
     
     const prepareVoteWrite = usePrepareContractWrite(
         {
@@ -109,12 +128,7 @@ export default function Tro()
         
         const voteWrite = useContractWrite(prepareVoteWrite.config);
 
-    function wriite()
-    {
-        seta(!a)
 
-        
-    }
 
     function toggleFormNewSondage() 
     {
@@ -161,10 +175,11 @@ export default function Tro()
 return (
         <>  
 
+        <div>{sondageData}</div>
+        <br></br>
+
             <div>
-            <button onClick={nextSondage}>NEXT SONDAGE</button>
-            &nbsp;
-            <button onClick={prevSondage}>PREV SONDAGE</button>
+
           </div>
 
         {!formNewSondage &&<button onClick={toggleFormNewSondage}>Créer un nouveau sondage</button>}
@@ -194,10 +209,10 @@ return (
 
 
         <br/>
-        <button onClick={wriite}>DEBUG</button> <br/>
+
         
 
-        {a && 
+       
 
             <div>
                 <h1>
@@ -209,30 +224,31 @@ return (
                 <br></br>
 
                 <h1>Réferendum numéro  {openContract} :</h1>
-                
-
-                    <div className="text-center  box-decoration-clone bg-gradient-to-r from-indigo-600 to-pink-500 text-white px-5">
+    
+<br/>
+                    <div className="border-blue-200 border-2 text-center  box-decoration-clone bg-gradient-to-r from-indigo-600 to-pink-500 text-white px-5">
                         
                          {// @ts-ignore
                         sondageData[1]
                     }
-                        <div className="box-decoration-clone bg-gradient-to-r from-indigo-800 to-pink-100 text-white px-5">
-                            <a className="underline"> 
+                        <div className="flex flex-row border-blue-200 border-2 box-decoration-clone bg-gradient-to-r to-red-800 from-blue-300 text-white px-5">
+                            
+                            
+                            <div className="basis-1/2 text-amber-100 underline"> 
                             {
                                 // @ts-ignore
                                 sondageData[2]
                             }
-                            </a>
+                            </div>
                             
-                            <br/>
                             <p>or</p>
                             
-                            <a className="underline">
+                            <div className="basis-1/2 text-amber-100 underline">
                             {
                                 // @ts-ignore
                                 sondageData[3]
                             }
-                            </a>
+                            </div>
                             
                         </div>
                         <br/>
@@ -240,8 +256,23 @@ return (
 
             </div>
 
+<br></br>
+            <center>
+                <div className="flex">
 
-        }
+                    <div className="flex-1 self-center rounded border-2 border-blue-800 bg-blue-600 cursor-pointer">  
+
+                    <div onClick={prevSondage}>PREV SONDAGE</div>
+
+                    </div>
+&nbsp;
+                    <a className="flex-1 self-center rounded border-2 border-blue-800 bg-blue-600 cursor-pointer">                    
+                    <div onClick={nextSondage}>NEXT SONDAGE</div>
+            
+                    </a>
+                    
+                </div>
+    </center>
 
         </>
         )

@@ -13,12 +13,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
-        <div className='awa'>
+
+      <body className='awa'>
+        <div>
           <Providers>{children}</Providers>
         </div>
-        
-
       </body>
     </html>
   )
