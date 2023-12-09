@@ -33,31 +33,15 @@ export function NetworkSwitcher() {
     
 
       <div>
-        Connected to {chain?.name ?? chain?.id}
-        {chain?.unsupported && ' (unsupported)'}
+        
+        {chain?.unsupported && ' which is unsupported for this app.\n Please switch network to Goerli Network'}
+
       </div>
 
       <br />
 
-      {switchNetwork && (
+     
 
-        <div>
-
-          Switch to:{' '}
-          {chains.map((x) =>
-            x.id === chain?.id ? null : (
-              <button key={x.id} onClick={() => switchNetwork(x.id)}>
-                {x.name}
-                {isLoading && x.id === pendingChainId && ' (switching)'}
-              </button>
-            ),
-          )}
-          
-        </div>
-
-      )}
-
-      <div>{error?.message}</div>
 
     </div>
   )
