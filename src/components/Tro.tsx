@@ -53,8 +53,8 @@ export default function Tro()
             address: '0x33434bf072f7188cea92CE3Da61D75a56F3624A7',
             ...abi,
             functionName:'sondageInfo',
-            // @ts-ignore
-            args : [openContract],
+            
+            args : [BigInt(openContract)],
                             
         }
     )
@@ -68,23 +68,7 @@ export default function Tro()
         sondageData=sondageInfo.data?.toString().split(',')
     },[openContract])
 
-    function addSondageUI()
-    {
-        return sondageInfo.data?.toString().split(',')
-
-        /*return(
-            <>
-                <div>
-                    <h1>
-                        Sondage n°{datas[0]} : {datas[1]}
-                    </h1>
-                </div>
-            </>
-        )*/
-        
-    }
-
-    
+  
     const prepareSondageWrite = usePrepareContractWrite(
         {
             address: '0x33434bf072f7188cea92CE3Da61D75a56F3624A7',
@@ -124,8 +108,8 @@ export default function Tro()
             address: '0x33434bf072f7188cea92CE3Da61D75a56F3624A7',
             ...abi,
             functionName: 'voter',
-            // @ts-ignore
-            args:[chosenSondage,chosenVote],
+            
+            args:[BigInt(chosenSondage),BigInt(chosenVote)],
         })
         
         const voteWrite = useContractWrite(prepareVoteWrite.config);
@@ -178,36 +162,19 @@ export default function Tro()
 
 return (
         <>  
-
-        <div>{sondageData}</div>
-
-        <br></br>
-
-
-
-
-
-
-
-
-
         
-        
-        
-
-
         <br/>
 
             <div>
-                <h1>
-                    il y a {// @ts-ignore 
+                <h1 className="text-white">
+                    il y a { 
                     (typeof sondageData !== 'undefined')?sondageData[0]:""
                 } 
                     &nbsp; sondages
                 </h1>
                 <br></br>
 
-                <h1>Réferendum numéro  {openContract} :</h1>
+                <h1 className="text-white">Réferendum numéro  {openContract} :</h1>
     
 <br/>
                     <div className="border-blue-200 border-2 text-center  box-decoration-clone bg-gradient-to-r from-indigo-600 to-pink-500 text-white px-5">
@@ -220,7 +187,7 @@ return (
                             
                             <button onClick={voteFor1} className="cursor-pointer basis-1/2 text-amber-100 underline"> 
                             {
-                                // @ts-ignore
+                                
                                 (typeof sondageData !== 'undefined')?sondageData[2]:""
                             }
                             </button>
@@ -229,7 +196,7 @@ return (
                             
                             <div onClick={voteFor2} className="cursor-pointer basis-1/2 text-amber-100 underline">
                             {
-                                // @ts-ignore
+                                
                                 (typeof sondageData !== 'undefined')?sondageData[3]:""
                             }
                             </div>
