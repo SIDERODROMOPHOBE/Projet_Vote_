@@ -41,11 +41,28 @@ export default function Tro()
         })
         
 
+    //For first render
+    useEffect(()=>
+    {
+        sondageCountq.refetch
+        setSondageCount(Number(sondageCountq.data))
+
+        sondageInfo.refetch
+        sondageData=sondageInfo.data?.toString().split(',')
+    },[])
+
+
+
+        //Refetching each time le nombre de sondages totaux
     useEffect(()=>{
         sondageCountq.refetch
         setSondageCount(Number(sondageCountq.data))
         
+        
     },[sondageCountq,sondageCount])
+
+
+    
            
     const sondageInfo = useContractRead
     (
