@@ -1,6 +1,6 @@
 'use client'
 
-import {useEffect, useState, ChangeEvent, SetStateAction } from "react";
+import {useEffect, useState, ChangeEvent,useRef } from "react";
 import {abi} from "./contracts"
 import { useContractRead, useContractWrite,usePrepareContractWrite  } from 'wagmi'
 
@@ -9,6 +9,9 @@ import "Styles/globals.css";
 
 export default function Tro() 
 {
+
+    const vercel_sondageCount=useRef(1)
+    const vercel_sondageInfo=useRef()
 
     const [openContract,setOpenContract] = useState(1);
 
@@ -57,7 +60,7 @@ export default function Tro()
     useEffect(()=>{
         sondageCountq.refetch
         setSondageCount(Number(sondageCountq.data))
-        
+        vercel_sondageCount.current =Number(sondageCountq.data)
         
     },[sondageCountq,sondageCount])
 
@@ -83,6 +86,8 @@ export default function Tro()
     useEffect(()=>{
         sondageInfo.refetch
         sondageData=sondageInfo.data?.toString().split(',')
+
+        //vercel_sondageInfo.current=sondageInfo.data?.toString().split(',')
     },[openContract])
 
   
@@ -185,9 +190,10 @@ return (
             <div>
                 <h1 className="text-white">
                     il y a { 
-                    (typeof sondageData !== 'undefined')?sondageData[0]:""
-                } 
-                    &nbsp; sondages
+                    //(typeof sondageData !== 'undefined')?sondageData[0]:""
+                    vercel_sondageCount.current
+                }
+                    &nbsp;  sondages
                 </h1>
                 <br></br>
 
