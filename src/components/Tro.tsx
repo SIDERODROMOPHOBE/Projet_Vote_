@@ -263,7 +263,6 @@ return (
 
 
 
-
     {!formNewSondage &&
     <center>
         <div className="m-3 ">
