@@ -138,6 +138,8 @@ export default function Tro()
         setNewSondageName("");
         setNewSondageOP1("");
         setNewSondageOP2("");
+
+
     }
     const [formNewSondage,setFormNewSondage] = useState(false);
 
@@ -178,35 +180,20 @@ return (
         <>  
 
         <div>{sondageData}</div>
+
         <br></br>
 
-            <div>
 
-          </div>
 
-        {!formNewSondage &&<button onClick={toggleFormNewSondage}>Créer un nouveau sondage</button>}
+
+
+
+
+
+
         
-        {formNewSondage && 
-        <div>
-        <label>Nom du nouveau sondage</label>
-            <input placeholder="Sondage Name" type="text" onChange={updateSondageName} value ={newSondageName}></input>
-            &nbsp;
-            <label>Nom de l'option de vote 1</label>
-            <input placeholder="Vote Option" type="text" onChange={updateSondageOP1} value ={newSondageOP1}></input>
-            &nbsp;
-            <label>Nom de l'option de vote 2</label>
-            <input placeholder="Other vote option" type="text" onChange={updateSondageOP2} value ={newSondageOP2}></input>
-            <br/>
-
-
-
-            <button disabled={newSondageName===''||newSondageOP1===""||newSondageOP2===""} onClick={() => sondageWrite.write?.()}>Créer le Sondage</button>
-            {sondageWrite.isLoading && <div>Check Wallet to validate transaction</div>}
-            {sondageWrite.isSuccess && <div>Transaction: {JSON.stringify(sondageWrite.data)}</div>}
-<br/>
-            <button onClick={toggleFormNewSondage}>Quitter</button>
-        </div>
-        }
+        
+        
 
 
         <br/>
@@ -214,7 +201,7 @@ return (
             <div>
                 <h1>
                     il y a {// @ts-ignore 
-                    sondageData[0]
+                    (typeof sondageData !== 'undefined')?sondageData[0]:""
                 } 
                     &nbsp; sondages
                 </h1>
@@ -225,30 +212,33 @@ return (
 <br/>
                     <div className="border-blue-200 border-2 text-center  box-decoration-clone bg-gradient-to-r from-indigo-600 to-pink-500 text-white px-5">
                         
-                         {// @ts-ignore
-                        sondageData[1]
+                         {
+                        (typeof sondageData !== 'undefined')?sondageData[1]:""
                     }
                         <div className="flex flex-row border-blue-200 border-2 box-decoration-clone bg-gradient-to-r to-red-800 from-blue-300 text-white px-5">
                             
                             
-                            <button onClick={voteFor1} className="basis-1/2 text-amber-100 underline"> 
+                            <button onClick={voteFor1} className="cursor-pointer basis-1/2 text-amber-100 underline"> 
                             {
                                 // @ts-ignore
-                                sondageData[2]
+                                (typeof sondageData !== 'undefined')?sondageData[2]:""
                             }
                             </button>
                             
                             <p>or</p>
                             
-                            <div onClick={voteFor2} className="basis-1/2 text-amber-100 underline">
+                            <div onClick={voteFor2} className="cursor-pointer basis-1/2 text-amber-100 underline">
                             {
                                 // @ts-ignore
-                                sondageData[3]
+                                (typeof sondageData !== 'undefined')?sondageData[3]:""
                             }
                             </div>
                             
                         </div>
-                        <br/>
+                        <br/>                        
+                        {voteWrite.isLoading && <div>Check Wallet to validate your Vote</div>}
+                        {voteWrite.isSuccess && <a href={"https://goerli.etherscan.io/address"+JSON.stringify(voteWrite.data)}>Transaction address: {JSON.stringify(voteWrite.data)}</a>}
+                        
                     </div>
 
             </div>
@@ -270,6 +260,55 @@ return (
                     
                 </div>
     </center>
+
+
+
+
+    {!formNewSondage &&
+    <center>
+        <div className="m-3 ">
+
+        
+        <button type="button" onClick={toggleFormNewSondage} className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2">Créer un nouveau sondage</button>
+        </div>
+    </center>
+        }
+
+{formNewSondage&&
+<div className="m-5">
+
+
+<div className="bg-fuchsia-800 border border-4 rounded-lg border-purple-800 max-w-sm mx-auto">
+
+    <div className="m-5">
+
+  <div className="mb-5">
+      <label  className="block mb-2 text-sm font-medium text-blue-600 ">Nom du sondage</label>
+      <input placeholder="Sondage Name" type="text" onChange={updateSondageName} value ={newSondageName} className="block w-full p-4 text-gray-900 border bg-purple-800 border border-purple-500 rounded-lg bg-gray-50 sm:text-md focus:ring-blue-500 focus:border-blue-500 "/>
+  </div>
+  <div className="mb-5">
+      <label  className="block mb-2 text-sm font-medium text-blue-600 ">Option de vote 1</label>
+      <input placeholder="Choice 1" type="text" onChange={updateSondageOP1} value ={newSondageOP1} className="bg-purple-800 border border-purple-500 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"/>
+  </div>
+  <div className="mb-5">
+      <label  className="block mb-2 text-sm font-medium text-blue-600 ">Option de vote 2</label>
+      <input placeholder="Choice 1" type="text" onChange={updateSondageOP2} value ={newSondageOP2} className="bg-purple-800 border border-purple-500 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"/>
+  </div>
+  <div className="flex-1">
+  <button type="button" disabled={newSondageName===''||newSondageOP1===""||newSondageOP2===""} onClick={() => sondageWrite.write?.()} className="focus:outline-none text-white bg-purple-700 disabled:hover:bg-purple-800 disabled:bg-purple-800 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2">Créer le Sondage</button>
+
+            {sondageWrite.isLoading && <div>Check Wallet to validate transaction</div>}
+            {sondageWrite.isSuccess && <div>Transaction: {JSON.stringify(sondageWrite.data)}</div>}
+&nbsp;
+            
+            
+<button type="button" onClick={toggleFormNewSondage} className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2">Quitter</button>
+            </div>
+        </div>
+</div>
+
+</div>
+}
 
         </>
         )
