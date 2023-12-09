@@ -15,5 +15,12 @@ Il est également vérifié sur Etherscan : https://goerli.etherscan.io/address/
 ## ATTENTION - l'application fonctionne en Localhost mais pas sur vercel, je n'ai pas reussi a comprendre pourquoi
 L'application web est déployée sur Vercel et est accessible à cette url : https://projet-vote.vercel.app/
 
+## How to run locally the application because ce ne marche pas on Vercel :'-(
+
+    1- git clone this Repos
+    2- open the directory in a Command Line Interpretor of your choice
+    3- type "npm i"
+    4- type "npm run dev"
+    5- Open a Web Browser and go to url : [localhost](localhost:3000)
 
 Application par Saliba Gabriel et Stoven Louis
