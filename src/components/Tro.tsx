@@ -257,8 +257,8 @@ return (
     <div className="m-2">
     <h1>Résultats du sondage :</h1>
 
-    <h2>Votes pour {(typeof sondageData !== 'undefined')?sondageData[2]:""} : {(typeof sondageData !== 'undefined')?sondageData[5]:""} </h2>
-    <h2>Votes pour {(typeof sondageData !== 'undefined')?sondageData[3]:""} : {(typeof sondageData !== 'undefined')?sondageData[4]:""} </h2>
+    <h2>Votes pour : {(typeof sondageData !== 'undefined')?sondageData[2]:""} : {(typeof sondageData !== 'undefined')?sondageData[5]:""} </h2>
+    <h2>Votes pour : {(typeof sondageData !== 'undefined')?sondageData[3]:""} : {(typeof sondageData !== 'undefined')?sondageData[4]:""} </h2>
     </div>
 </div>
 
