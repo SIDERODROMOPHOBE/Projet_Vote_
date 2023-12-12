@@ -2,8 +2,9 @@
 
 import { BaseError } from 'viem'
 
-import { useAccount, useConnect, useDisconnect, sepolia } from 'wagmi'
-
+import { useAccount, useConnect, useDisconnect, sepolia,configureChains } from 'wagmi'
+import {goerli} from 'wagmi/chains'
+import { infuraProvider } from 'wagmi/providers/infura'
 
 export function Connect() {
 
@@ -15,6 +16,10 @@ export function Connect() {
       chainId:sepolia.id,
     }*/)
 
+    const { chains, publicClient } = configureChains(
+      [goerli,sepolia],
+      [infuraProvider({ apiKey: '01d84256042040afb53ee2ef68300312' })],
+    )
 
   const { disconnect } = useDisconnect()
 
